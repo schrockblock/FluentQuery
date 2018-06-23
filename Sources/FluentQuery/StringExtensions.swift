@@ -31,4 +31,8 @@ extension String {
     static func roundBracketted(_ v: Any) -> String {
         return String(describing: v).roundBracketted
     }
+    
+    func `as`(_ v: String) -> String {
+        return self + " as " + v
+    }
 }
