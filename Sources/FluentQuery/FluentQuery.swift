@@ -177,7 +177,7 @@ public class FluentQuery: FQPart, CustomStringConvertible {
     
     @discardableResult
     public func join<T>(_ mode: FQJoinMode, _ table: T.Type, where: FQWhere) -> Self where T: Model {
-        joins.append(FQJoin(mode, table: T.FQType.self, where: `where`))
+        joins.append(FQJoin(mode, table: T.self, where: `where`))
         return self
     }
     
@@ -362,8 +362,8 @@ public class FluentQuery: FQPart, CustomStringConvertible {
 }
 
 extension FluentQuery {
-    static func formattedPath<T, V>(_ table: FQTable<T>.Type, _ kp: KeyPath<T, V>) -> String where T: Model {
-        return FluentQuery.formattedPath(table.alias, kp)
+    static func formattedPath<T, V>(_ table: T.Type, _ kp: KeyPath<T, V>) -> String where T: Model {
+        return FluentQuery.formattedPath(table.FQType.alias, kp)
     }
     
     static func formattedPath<T, V>(_ table: String, _ kp: KeyPath<T, V>) -> String where T: Model {
@@ -392,7 +392,7 @@ extension Model {
     }
     
     static func property<T, V>(_ kp: KeyPath<T, V>) -> String where T: Model {
-        return FluentQuery.formattedPath(T.FQType.self, kp)
+        return FluentQuery.formattedPath(T.self, kp)
     }
 }
 
@@ -402,7 +402,7 @@ let FluentQueryNextLine = """
 """
 
 public func FQGetKeyPath<T, V>(_ kp: KeyPath<T, V>) -> String where T: Model {
-    return FluentQuery.formattedPath(T.FQType.self, kp)
+    return FluentQuery.formattedPath(T.self, kp)
 }
 
 public func FQGetKeyPath<T, V>(_ alias: AliasedKeyPath<T, V>) -> String where T: Model {
