@@ -32,6 +32,7 @@ public class FluentQuery: FQPart, CustomStringConvertible {
     public var orderBy: FQOrderBy?
     public var offset: Int?
     public var limit: Int?
+    public var unions: [FluentQuery] = []
     
     public init(copy from: FluentQuery? = nil) {
         if let from = from {
@@ -286,6 +287,12 @@ public class FluentQuery: FQPart, CustomStringConvertible {
         return self
     }
     
+    @discardableResult
+    public func union(_ v: FluentQuery) -> Self {
+        unions.append(v)
+        return self
+    }
+    
     public var query: String {
         var result = "SELECT"
         result.append(FluentQueryNextLine)
@@ -336,6 +343,14 @@ public class FluentQuery: FQPart, CustomStringConvertible {
         if let limit = limit {
             result.append(FluentQueryNextLine)
             result.append("LIMIT \(limit)")
+        }
+        if unions.count > 0 {
+            var result = result.roundBracketted
+            unions.forEach { query in
+                result.append(" UNION ")
+                result.append(query.query.roundBracketted)
+            }
+            return result
         }
         return result
     }
