@@ -20,16 +20,16 @@ extension String {
         return "(" + self + ")"
     }
     
-    static func singleQuotted(_ v: Any?) -> String {
-        return String(describing: v ?? "NULL").singleQuotted
+    static func singleQuotted(_ v: Any) -> String {
+        return String(describing: v).singleQuotted
     }
     
-    static func doubleQuotted(_ v: Any?) -> String {
-        return String(describing: v ?? "NULL").doubleQuotted
+    static func doubleQuotted(_ v: Any) -> String {
+        return String(describing: v).doubleQuotted
     }
     
-    static func roundBracketted(_ v: Any?) -> String {
-        return String(describing: v ?? "NULL").roundBracketted
+    static func roundBracketted(_ v: Any) -> String {
+        return String(describing: v).roundBracketted
     }
     
     func `as`(_ v: String) -> String {

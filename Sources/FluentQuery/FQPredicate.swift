@@ -105,8 +105,9 @@ public class FQPredicate<T>: FQPart, FQPredicateGenericType  where T: FQUniversa
                         return v
                     }
                 }
+                return String.singleQuotted(v)
             }
-            return String.singleQuotted(v)
+            return "NULL"
         case is UUID: if let v = v as? UUID { return v.uuidString.singleQuotted } else { fallthrough }
         case is Bool: if let v = v as? Bool { return v ? "TRUE" : "FALSE" } else { fallthrough }
         case is Date: if let date = v as? Date {
